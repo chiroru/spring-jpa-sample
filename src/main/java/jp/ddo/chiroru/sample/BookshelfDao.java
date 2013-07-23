@@ -3,6 +3,7 @@ package jp.ddo.chiroru.sample;
 import java.util.List;
 
 public interface BookshelfDao {
+
     public Bookshelf findOne(long id);
 
     public List<Bookshelf> findAll();

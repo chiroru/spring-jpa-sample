@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 
 public abstract class AbstractJpaDAO<T extends Serializable> {
 
@@ -25,6 +27,20 @@ public abstract class AbstractJpaDAO<T extends Serializable> {
     public List< T > findAll(){
         return entityManager.createQuery( "from " + clazz.getName() )
                 .getResultList();
+    }
+
+    public List<T> findRange(int maxResults, int firstResult) {
+        CriteriaQuery<T> cq = entityManager.getCriteriaBuilder().createQuery(clazz);
+        cq.select(cq.from(clazz));
+        TypedQuery<T> q = entityManager.createQuery(cq);
+        q.setMaxResults(maxResults);
+        q.setFirstResult(firstResult);
+        return q.getResultList();
+    }
+
+    public int count() {
+        return ((Long) entityManager.createQuery("select count(o) from " + clazz.getSimpleName() + " as o").
+                getSingleResult()).intValue();
     }
 
     public void create( T entity ){
