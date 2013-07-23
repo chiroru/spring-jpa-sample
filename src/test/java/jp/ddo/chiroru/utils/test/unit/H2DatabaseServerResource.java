@@ -1,4 +1,4 @@
-package jp.ddo.chiroru.sample.test.unit;
+package jp.ddo.chiroru.utils.test.unit;
 
 import java.io.IOException;
 //import java.sql.Connection;

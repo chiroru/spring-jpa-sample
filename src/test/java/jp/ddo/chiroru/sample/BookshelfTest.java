@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import jp.ddo.chiroru.sample.test.unit.H2DatabaseServerResource;
+import jp.ddo.chiroru.utils.test.unit.H2DatabaseServerResource;
 
 import org.junit.ClassRule;
 import org.junit.Test;

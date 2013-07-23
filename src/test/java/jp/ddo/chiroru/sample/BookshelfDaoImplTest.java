@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThat;
 import java.sql.Timestamp;
 import java.util.List;
 
-import jp.ddo.chiroru.sample.test.unit.H2DatabaseServerResource;
+import jp.ddo.chiroru.utils.test.unit.H2DatabaseServerResource;
 
 import org.junit.ClassRule;
 import org.junit.Test;
