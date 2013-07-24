@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 public abstract class AbstractJpaDAO<T extends Serializable> {
@@ -38,9 +39,13 @@ public abstract class AbstractJpaDAO<T extends Serializable> {
         return q.getResultList();
     }
 
-    public int count() {
-        return ((Long) entityManager.createQuery("select count(o) from " + clazz.getSimpleName() + " as o").
-                getSingleResult()).intValue();
+    public long count() {
+        CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        cq.select(qb.count(cq.from(clazz)));
+        // cq.where(/*your stuff*/);
+        TypedQuery<Long> query = entityManager.createQuery(cq);
+        return query.getSingleResult();
     }
 
     public void create( T entity ){

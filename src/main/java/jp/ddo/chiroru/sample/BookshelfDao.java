@@ -8,6 +8,10 @@ public interface BookshelfDao {
 
     public List<Bookshelf> findAll();
 
+    long count();
+
+    List<Bookshelf> findRange(int maxResults, int firstResult);
+    
     public void create(Bookshelf bookshelf);
 
     public Bookshelf update(Bookshelf bookshelf);

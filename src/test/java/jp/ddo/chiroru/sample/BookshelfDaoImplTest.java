@@ -44,4 +44,82 @@ public class BookshelfDaoImplTest {
         List<Bookshelf> l = dao.findAll();
         assertThat(l.size(), is(1));
     }
+
+    @Test
+    public void Bookshelfの情報を更新()
+            throws Exception {
+        Bookshelf b = new Bookshelf();
+        b.setName("名前");
+        b.setDescription("説明");
+        b.setCreatedAt(Timestamp.valueOf("2013-07-16 13:31:00"));
+        b.setCreatedUser("作成者");
+        b.setUpdatedAt(Timestamp.valueOf("2013-07-16 13:3:01"));
+        b.setUpdatedUser("更新者");
+        dao.create(b);
+
+        b.setName("更新");
+        dao.update(b);
+        List<Bookshelf> l = dao.findAll();
+        assertThat(l.size(), is(1));
+        Bookshelf result = l.get(0);
+        assertThat(result.getName(), is("更新"));
+    }
+
+    @Test
+    public void Bookshelfの情報を削除()
+            throws Exception {
+        Bookshelf b = new Bookshelf();
+        b.setName("名前");
+        b.setDescription("説明");
+        b.setCreatedAt(Timestamp.valueOf("2013-07-16 13:31:00"));
+        b.setCreatedUser("作成者");
+        b.setUpdatedAt(Timestamp.valueOf("2013-07-16 13:3:01"));
+        b.setUpdatedUser("更新者");
+        dao.create(b);
+
+        List<Bookshelf> l = dao.findAll();
+        assertThat(l.size(), is(1));
+
+        dao.delete(b);
+
+        l = dao.findAll();
+        assertThat(l.size(), is(0));
+    }
+
+    @Test
+    public void Bookshelfの情報をカウント()
+            throws Exception {
+
+        for ( int i = 0; i < 100; i++) {
+            Bookshelf b = new Bookshelf();
+            b.setName("名前 " + i);
+            b.setDescription("説明 " + i);
+            b.setCreatedAt(Timestamp.valueOf("2013-07-16 13:31:00"));
+            b.setCreatedUser("作成者 " + i);
+            b.setUpdatedAt(Timestamp.valueOf("2013-07-16 13:3:01"));
+            b.setUpdatedUser("更新者 " + i);
+            dao.create(b);
+        }
+
+        assertThat(dao.count(), is(new Long(100)));
+    }
+
+    @Test
+    public void Bookshelfの情報をレンジ検索()
+            throws Exception {
+
+        for ( int i = 0; i < 100; i++) {
+            Bookshelf b = new Bookshelf();
+            b.setName("名前 " + i);
+            b.setDescription("説明 " + i);
+            b.setCreatedAt(Timestamp.valueOf("2013-07-16 13:31:00"));
+            b.setCreatedUser("作成者 " + i);
+            b.setUpdatedAt(Timestamp.valueOf("2013-07-16 13:3:01"));
+            b.setUpdatedUser("更新者 " + i);
+            dao.create(b);
+        }
+
+        List<Bookshelf> l = dao.findRange(10, 10);
+        assertThat(l.size(), is(10));
+    }
 }
